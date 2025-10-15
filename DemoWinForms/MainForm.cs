@@ -49,5 +49,12 @@ namespace DemoProject
             
             presenter_.SearchClientsByPartialName(searchingText);
         }
+
+        private void FiltrByPhoneTextBox_TextChanged(object sender, System.EventArgs e)
+        {
+            string filteredPhone = FiltrByPhoneTextBox.Text;
+
+            presenter_.FilterClientsByPhone(filteredPhone);
+        }
     }
 }
