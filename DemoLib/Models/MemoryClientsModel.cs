@@ -49,5 +49,15 @@ namespace DemoLib.Models
         {
             return allClients_.Count;
         }
+
+        public int GenerateNextID()
+        {
+            return allClients_.Count + 1;
+        }
+
+        public void AddClient(Client client)
+        {
+            allClients_.Add(client);
+        }
     }
 }

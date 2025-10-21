@@ -34,7 +34,7 @@ namespace DemoLib.Presenters
                 string clientNameToLower = client.Name.ToLower();
                 string text = searchText.ToLower();
 
-                if (clientNameToLower.Contains(text))
+                if(clientNameToLower.Contains(text))
                 {
                     view.ShowView();
                 }
@@ -45,26 +45,24 @@ namespace DemoLib.Presenters
             }
         }
 
-        public void FilterClientsByPhone(string searchText)
+        public void AddClient(Client newClient)
         {
-            foreach (IClientView view in views_)
-            {
-                Client client = view.GetClientInfo();  
-                string clientPhoneToLower = client.Phone.ToLower();  
-                string textToLower = searchText.ToLower(); 
-                if (clientPhoneToLower.Contains(textToLower))  
-                {
-                    view.ShowView();  
-                }
-                else
-                {
-                    view.HideView(); 
-                }
-            }
-
-            /// Д.З. Реализация фильтрации по какому-либо полю клиента
-            /// Задание на 5+++++++. Сортировка  по числу заказов!!!
-
+            model_.AddClient(newClient);
         }
+
+        public int GenerateNextId()
+        {
+            return model_.GenerateNextID();
+        }
+
+        public void AddClientView(IClientView view, Client client)
+        {
+            views_.Add(view);
+            view.ShowClientInfo(client);
+            view.ShowView();
+        }
+
+        /// Д.З. Реализация фильтрации по какому-либо полю клиента
+        /// Задание на 5+++++++. Сортировка  по числу заказов!!!
     }
 }

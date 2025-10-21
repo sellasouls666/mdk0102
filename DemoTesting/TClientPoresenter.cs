@@ -23,6 +23,7 @@ namespace DemoTesting
             c1.Mail = "666@sobaka.ru";
             c1.ImagePath = "../../../Resources/img/Valera.jpg";
 
+
             Client c2 = new Client(2);
             c2.Name = "ОАО ЕПРСТЕЙКА";
             c2.Description = "Похуже, чем Валера";
@@ -41,9 +42,8 @@ namespace DemoTesting
             testClients.Add(c2);
             testClients.Add(c3);
 
-            var mockModel = new Mock<IClientsModel>();
-            var mockViews = new List<IClientView>(); 
-            var mockViewMocks = new List<Mock<IClientView>>();
+            var mockModel = new Mock<IClientsModel>(); /// фейковая модель
+            var mockViews = new List<IClientView>(); /// фейковые представления
 
             int countClients = testClients.Count;
             mockModel
@@ -58,16 +58,12 @@ namespace DemoTesting
             {
                 Client client = testClients[clientId];
                 Mock<IClientView> view = new Mock<IClientView>();
-                mockViewMocks.Add(view);  
-                mockViews.Add(view.Object); 
-            }
 
+                ///Д.З. сделать проверку Verify
+                view.Setup(v => v.ShowClientInfo(client));
+                mockViews.Add(view.Object);
+            }
             var clientPresenter = new ClientPresenter(mockModel.Object, mockViews);
-
-            for (int i = 0; i < countClients; i++)
-            {
-                mockViewMocks[i].Verify(v => v.ShowClientInfo(testClients[i]), Times.Once());
-            }
         }
     }
 }

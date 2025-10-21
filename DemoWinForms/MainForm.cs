@@ -10,9 +10,11 @@ namespace DemoProject
 {
     public partial class MainForm : Form
     {
+        private User currentUser_ = null;
         private ClientPresenter presenter_;
-        public MainForm()
+        public MainForm(User user)
         {
+            currentUser_ = user;
             InitializeComponent();
 
             MemoryClientsModel model = new MemoryClientsModel();
@@ -37,10 +39,21 @@ namespace DemoProject
                 return;
             }
 
-            ClientOrdersForm ordersForm = new ClientOrdersForm();
-            ordersForm.Text = "Заказы клиента " + obj.Name;
-            ordersForm.SetOrder(obj.order);
-            ordersForm.ShowDialog();
+            if (isLowRoleUser())
+            {
+                MessageBox.Show("У Вас не хватает прав, чтобы посмотреть заказы.\n" +
+                                "Обратитесь, пожалуйста, к администратору",
+                                "Сообщение",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+            else
+            {
+                ClientOrdersForm ordersForm = new ClientOrdersForm(currentUser_);
+                ordersForm.Text = "Заказы клиента " + obj.Name;
+                ordersForm.SetOrder(obj.order);
+                ordersForm.ShowDialog();
+            }
         }
 
         private void SearchByClientNameTextBox_TextChanged(object sender, System.EventArgs e)
@@ -50,11 +63,44 @@ namespace DemoProject
             presenter_.SearchClientsByPartialName(searchingText);
         }
 
-        private void FiltrByPhoneTextBox_TextChanged(object sender, System.EventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string filteredPhone = FiltrByPhoneTextBox.Text;
+            Application.Exit();
+        }
 
-            presenter_.FilterClientsByPhone(filteredPhone);
+        private bool isLowRoleUser()
+        {
+            /// currentUser_ == null - это гость
+            return currentUser_.Role == UserRole.Client || currentUser_ == null;
+        }
+
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+            if(isLowRoleUser())
+            {
+                this.SearchByClientNameTextBox.Enabled = false;
+                this.SearchByNameLabel.Text = "Поиск по клиенту Вам недоступен";
+                this.SearchByNameLabel.ForeColor = System.Drawing.Color.Red;
+            }
+
+            if (currentUser_ != null)
+            {
+                Text = this.Text + " - " + currentUser_.Login;
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, System.EventArgs e)
+        {
+            AddClientForm addForm = new AddClientForm(presenter_);
+            DialogResult result = addForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                presenter_.AddClient(addForm.newClient);
+                ClientView card = new ClientView();
+                card.SelectedClient += Card_SelectedClient;
+                ClientsLayout.Controls.Add(card);
+                presenter_.AddClientView(card, addForm.newClient);
+            }
         }
     }
 }

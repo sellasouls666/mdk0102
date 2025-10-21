@@ -7,5 +7,9 @@ namespace DemoLib.Models
         List<Client> ReadAllClients();
 
         int GetClientsCount();
+
+        int GenerateNextID();
+
+        void AddClient(Client client);
     }
 }
