@@ -95,11 +95,11 @@ namespace DemoProject
             DialogResult result = addForm.ShowDialog();
             if (result == DialogResult.OK)
             {
-                presenter_.AddClient(addForm.newClient);
+                presenter_.AddClient(addForm.GetNewClient());
                 ClientView card = new ClientView();
                 card.SelectedClient += Card_SelectedClient;
                 ClientsLayout.Controls.Add(card);
-                presenter_.AddClientView(card, addForm.newClient);
+                presenter_.AddClientView(card, addForm.GetNewClient());
             }
         }
     }

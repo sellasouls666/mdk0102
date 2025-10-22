@@ -15,7 +15,7 @@ namespace DemoProject
     public partial class AddClientForm : Form
     {
         private ClientPresenter presenter_;
-        public Client newClient;
+        private Client newClient_;
         private string selectedImagePath_;
 
         public AddClientForm(ClientPresenter presenter)
@@ -92,7 +92,7 @@ namespace DemoProject
             addClient.Phone = phoneBox.Text;
             addClient.Mail = mailBox.Text;
             addClient.ImagePath = selectedImagePath_;
-            newClient = (Client)addClient;
+            newClient_ = (Client)addClient;
             DialogResult = DialogResult.OK;
         }
 
@@ -113,6 +113,11 @@ namespace DemoProject
                                   MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        public Client GetNewClient()
+        {
+            return newClient_;
         }
     }
 }
