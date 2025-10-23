@@ -2,11 +2,11 @@
 
 namespace DemoLib.Models
 {
-    public class MemoryClientsModel : IClientsModel
+    public class MemoryClientsModel
     {
         private List<Client> allClients_ = new List<Client>();  
 
-        public MemoryClientsModel()
+        /*public MemoryClientsModel()
         {
             Client c1 = new Client(1);
             c1.Name = "Просто Валера";
@@ -58,6 +58,6 @@ namespace DemoLib.Models
         public void AddClient(Client client)
         {
             allClients_.Add(client);
-        }
+        }*/
     }
 }

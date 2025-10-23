@@ -8,8 +8,8 @@ namespace ClientCard
 {
     public partial class ClientView: UserControl, IClientView
     {
-        private Color defaultColor = Color.FromArgb(255, 192, 128);
-        private Color enteringColor = Color.FromName("SlateBlue");
+        private Color defaultColor = Color.FromArgb(255, 255, 255);
+        private Color enteringColor = Color.FromArgb(219, 211, 216);
         private Client client_;
 
         public event Action<Client> SelectedClient;
@@ -22,6 +22,7 @@ namespace ClientCard
             {
                 control.MouseEnter += ClientView_MouseEnter;
                 control.MouseLeave += ClientView_MouseLeave;
+                control.MouseClick += ClientView_MouseClick;
             }
         }
 
