@@ -120,6 +120,11 @@ namespace SimpleDemoWin
         {
             return newClient_;
         }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+        }
     }
 }
 

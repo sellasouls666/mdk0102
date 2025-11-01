@@ -116,6 +116,11 @@ namespace SimpleDemoWin
                 allClients_ = model_.ReadAllClients();
                 ShowClients(allClients_);
             }
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
         }
     }
 }

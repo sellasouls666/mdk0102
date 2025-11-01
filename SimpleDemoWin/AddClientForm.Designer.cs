@@ -39,6 +39,7 @@
             this.nameBox = new System.Windows.Forms.TextBox();
             this.phoneBox = new System.Windows.Forms.TextBox();
             this.mailBox = new System.Windows.Forms.TextBox();
+            this.cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // imageBtn
@@ -53,11 +54,11 @@
             // 
             // addBtn
             // 
-            this.addBtn.Location = new System.Drawing.Point(85, 150);
+            this.addBtn.Location = new System.Drawing.Point(120, 150);
             this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(100, 23);
+            this.addBtn.Size = new System.Drawing.Size(89, 23);
             this.addBtn.TabIndex = 21;
-            this.addBtn.Text = "Добавить";
+            this.addBtn.Text = "ОК";
             this.addBtn.UseVisualStyleBackColor = true;
             this.addBtn.Click += new System.EventHandler(this.addBtn_Click);
             // 
@@ -135,11 +136,22 @@
             this.mailBox.Size = new System.Drawing.Size(100, 20);
             this.mailBox.TabIndex = 12;
             // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(12, 151);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(91, 23);
+            this.cancelButton.TabIndex = 23;
+            this.cancelButton.Text = "Отмена";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
             // AddClientForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(222, 198);
+            this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.imageBtn);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.label5);
@@ -152,7 +164,7 @@
             this.Controls.Add(this.phoneBox);
             this.Controls.Add(this.mailBox);
             this.Name = "AddClientForm";
-            this.Text = "AddClientForm";
+            this.Text = "Добавление";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,5 +183,6 @@
         private System.Windows.Forms.TextBox nameBox;
         private System.Windows.Forms.TextBox phoneBox;
         private System.Windows.Forms.TextBox mailBox;
+        private System.Windows.Forms.Button cancelButton;
     }
 }
