@@ -126,5 +126,27 @@ namespace DemoLib.Models.Clients
                 throw ex;
             }
         }
+
+        public void RemoveClient(Client client)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection((string)connStr))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM clientsinfo WHERE id = @id";
+                    MySqlCommand command = new MySqlCommand(sql, connection);
+
+                    command.Parameters.AddWithValue("@id", client.ID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

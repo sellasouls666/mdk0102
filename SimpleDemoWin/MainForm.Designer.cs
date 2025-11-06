@@ -99,6 +99,7 @@
             this.RemoveButton.Size = new System.Drawing.Size(55, 35);
             this.RemoveButton.Text = "Удалить";
             this.RemoveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
             // 
             // EditButton
             // 
@@ -175,7 +176,7 @@
             // 
             // Card
             // 
-            this.Card.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.Card.BackColor = System.Drawing.Color.White;
             this.Card.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Card.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Card.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -214,10 +215,10 @@
         private System.Windows.Forms.ToolStripButton EditButton;
         private System.Windows.Forms.ListBox ClientsListBox;
         private System.Windows.Forms.Panel ContentView;
-        private ClientCard.ClientView Card;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripTextBox SearchByNameTextBox;
         private System.Windows.Forms.ToolStripComboBox AlphabetComboBox;
+        private ClientCard.ClientView Card;
     }
 }
 
