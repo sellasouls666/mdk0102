@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DemoLib.Models.Clients;
+using System.IO;
 
 namespace SimpleDemoWin
 {
@@ -108,10 +109,26 @@ namespace SimpleDemoWin
                 {
                     string imagePath = openFileDialog.FileName;
 
-                    selectedImagePath_ = imagePath;
+                    try
+                    {
+                        string solutionDir = Directory.GetParent(Application.StartupPath).Parent.Parent.FullName;
+                        string resourcesDir = Path.Combine(solutionDir, "Resources", "img");
 
-                    MessageBox.Show($"Выбрано изображение: {imagePath}", "Успех",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imagePath);
+                        string destinationPath = Path.Combine(resourcesDir, fileName);
+
+                        File.Copy(imagePath, destinationPath, true);
+
+                        selectedImagePath_ = $"../../../Resources/img/{fileName}";
+
+                        MessageBox.Show($"Изображение успешно загружено!", "Успех",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при загрузке изображения: {ex.Message}", "Ошибка",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
