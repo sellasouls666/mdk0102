@@ -55,23 +55,50 @@ namespace SimpleDemoWin
         {
             if (OrdersTable.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Выберите заказ для удаления", "Информация",
+                MessageBox.Show("Выберите заказы для удаления", "Информация",
                                 MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            DataGridViewRow selectedRow = OrdersTable.SelectedRows[0];
+            List<OrderRecord> selectedOrders = new List<OrderRecord>();
 
-            OrderRecord order = selectedRow.DataBoundItem as OrderRecord;
-            if (order == null)
+            foreach (DataGridViewRow row in OrdersTable.SelectedRows)
             {
-                MessageBox.Show("Не удалось получить данные заказа", "Ошибка",
+                OrderRecord order = row.DataBoundItem as OrderRecord;
+                if (order != null)
+                {
+                    selectedOrders.Add(order);
+                }
+            }
+
+            if (selectedOrders.Count == 0)
+            {
+                MessageBox.Show("Не удалось получить данные заказов", "Ошибка",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            string message;
+            if (selectedOrders.Count == 1)
+            {
+                message = $"Вы уверены, что хотите удалить заказ?\nАртикул: {selectedOrders[0].NameProduct}";
+            }
+            else
+            {
+                message = $"Вы уверены, что хотите удалить {selectedOrders.Count} заказов?\n\n";
+                message += "Выбранные заказы:\n";
+                foreach (var order in selectedOrders.Take(5)) // Показываем первые 5 для краткости
+                {
+                    message += $"- {order.NameProduct}\n";
+                }
+                if (selectedOrders.Count > 5)
+                {
+                    message += $"- ... и еще {selectedOrders.Count - 5} заказов\n";
+                }
+            }
+
             DialogResult result = MessageBox.Show(
-                $"Вы уверены, что хотите удалить заказ?\nАртикул: {order.NameProduct}",
+                message,
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
@@ -81,19 +108,50 @@ namespace SimpleDemoWin
             {
                 try
                 {
-                    model_.DeleteOrder(order);
-                    client_.order.RemoveRecord(order);
+                    int successCount = 0;
+                    foreach (var order in selectedOrders)
+                    {
+                        try
+                        {
+                            model_.DeleteOrder(order);
+                            client_.order.RemoveRecord(order);
+                            successCount++;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при удалении заказа {order.NameProduct}: {ex.Message}");
+                        }
+                    }
+
                     RefreshOrdersTable();
 
-                    MessageBox.Show("Заказ успешно удален", "Успех",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string resultMessage = successCount == selectedOrders.Count
+                        ? $"Успешно удалено {successCount} заказов"
+                        : $"Удалено {successCount} из {selectedOrders.Count} заказов. Некоторые заказы не были удалены.";
+
+                    MessageBox.Show(resultMessage, "Результат удаления",
+                                    MessageBoxButtons.OK,
+                                    successCount == selectedOrders.Count ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при удалении заказа: {ex.Message}", "Ошибка",
+                    MessageBox.Show($"Ошибка при удалении заказов: {ex.Message}", "Ошибка",
                                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void sortButton_Click(object sender, EventArgs e)
+        {
+            List<OrderRecord> sortedOrders = orders_.OrderByDescending(order => order.Count).ToList();
+
+            OrdersTable.DataSource = null;
+            OrdersTable.DataSource = sortedOrders;
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            RefreshOrdersTable();
         }
     }
 }

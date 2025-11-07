@@ -33,6 +33,8 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.OrdersTable = new System.Windows.Forms.DataGridView();
+            this.sortButton = new System.Windows.Forms.ToolStripButton();
+            this.backButton = new System.Windows.Forms.ToolStripButton();
             this.ManagementPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrdersTable)).BeginInit();
             this.SuspendLayout();
@@ -42,10 +44,12 @@
             this.ManagementPanel.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.ManagementPanel.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.sortButton,
+            this.backButton});
             this.ManagementPanel.Location = new System.Drawing.Point(0, 0);
             this.ManagementPanel.Name = "ManagementPanel";
-            this.ManagementPanel.Size = new System.Drawing.Size(800, 35);
+            this.ManagementPanel.Size = new System.Drawing.Size(800, 39);
             this.ManagementPanel.TabIndex = 2;
             this.ManagementPanel.Text = "toolStrip1";
             // 
@@ -58,7 +62,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(32, 32);
             this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "Позволит добавить новый заказ";
+            this.toolStripButton1.ToolTipText = "Добавление";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
@@ -70,6 +74,7 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(32, 32);
             this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "Удаление";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // OrdersTable
@@ -85,6 +90,27 @@
             this.OrdersTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.OrdersTable.Size = new System.Drawing.Size(800, 412);
             this.OrdersTable.TabIndex = 3;
+            // 
+            // sortButton
+            // 
+            this.sortButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.sortButton.Image = ((System.Drawing.Image)(resources.GetObject("sortButton.Image")));
+            this.sortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.sortButton.Name = "sortButton";
+            this.sortButton.Size = new System.Drawing.Size(36, 36);
+            this.sortButton.Text = "toolStripButton3";
+            this.sortButton.ToolTipText = "Сортировка по убыванию количества";
+            this.sortButton.Click += new System.EventHandler(this.sortButton_Click);
+            // 
+            // backButton
+            // 
+            this.backButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.backButton.Image = ((System.Drawing.Image)(resources.GetObject("backButton.Image")));
+            this.backButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(36, 36);
+            this.backButton.Text = "toolStripButton3";
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // ClientOrdersForm
             // 
@@ -110,5 +136,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.DataGridView OrdersTable;
+        private System.Windows.Forms.ToolStripButton sortButton;
+        private System.Windows.Forms.ToolStripButton backButton;
     }
 }
