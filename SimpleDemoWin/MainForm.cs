@@ -30,6 +30,8 @@ namespace SimpleDemoWin
 
             allClients_ = model_.ReadAllClients();
             ShowClients(allClients_);
+
+            AttachDoubleClickToCardControls(Card);
         }
 
         private void ClientsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -178,6 +180,37 @@ namespace SimpleDemoWin
             if (result == DialogResult.Cancel)
             {
                 return;
+            }
+        }
+
+        private void Card_DoubleClick(object sender, EventArgs e)
+        {
+            var item = ClientsListBox.SelectedItem;
+            if (item == null)
+            {
+                return;
+            }
+
+            Client client = item as Client;
+            if (client == null)
+            {
+
+                return;
+            }
+            ClientOrdersForm ordersForm = new ClientOrdersForm(client, model_);
+            ordersForm.Text = "Заказы клиента " + client.Name;
+            ordersForm.ShowDialog();
+        }
+
+        private void AttachDoubleClickToCardControls(Control container)
+        {
+            foreach (Control control in container.Controls)
+            {
+                control.DoubleClick += Card_DoubleClick;
+                if (control.HasChildren)
+                {
+                    AttachDoubleClickToCardControls(control);
+                }
             }
         }
     }

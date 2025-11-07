@@ -185,6 +185,7 @@
             this.Card.Name = "Card";
             this.Card.Size = new System.Drawing.Size(585, 314);
             this.Card.TabIndex = 0;
+            this.Card.DoubleClick += new System.EventHandler(this.Card_DoubleClick);
             // 
             // MainForm
             // 

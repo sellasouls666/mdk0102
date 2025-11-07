@@ -52,19 +52,37 @@
     <Compile Include="AddClientForm.Designer.cs">
       <DependentUpon>AddClientForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClientOrdersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientOrdersForm.Designer.cs">
+      <DependentUpon>ClientOrdersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderAddForm.Designer.cs">
+      <DependentUpon>OrderAddForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddClientForm.resx">
       <DependentUpon>AddClientForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ClientOrdersForm.resx">
+      <DependentUpon>ClientOrdersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderAddForm.resx">
+      <DependentUpon>OrderAddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

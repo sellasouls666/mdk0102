@@ -176,5 +176,31 @@ namespace DemoLib.Models.Clients
                 throw ex;
             }
         }
+
+        public void AddOrder(OrderRecord order, int idClient)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection((string)(connStr)))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO orders (idClient, article, date, price, count) VALUES (@idClient, @article, @date, @price, @count)";
+                    MySqlCommand command = new MySqlCommand(sql, connection);
+
+                    command.Parameters.AddWithValue("@idClient", idClient);
+                    command.Parameters.AddWithValue("@article", order.NameProduct);
+                    command.Parameters.AddWithValue("@date", order.SaleDate);
+                    command.Parameters.AddWithValue("@price", order.Price);
+                    command.Parameters.AddWithValue("@count", order.Count);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
