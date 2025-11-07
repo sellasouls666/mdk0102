@@ -47,5 +47,9 @@ namespace SimpleDemoWin
         {
             DialogResult = DialogResult.Cancel;
         }
+
+        private void OrderAddForm_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

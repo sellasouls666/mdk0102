@@ -144,6 +144,7 @@
             this.Controls.Add(this.nameBox);
             this.Name = "OrderAddForm";
             this.Text = "OrderAddForm";
+            this.Load += new System.EventHandler(this.OrderAddForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.priceBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.countBox)).EndInit();
             this.ResumeLayout(false);

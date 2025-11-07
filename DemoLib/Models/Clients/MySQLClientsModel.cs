@@ -202,5 +202,27 @@ namespace DemoLib.Models.Clients
                 throw ex;
             }
         }
+
+        public void DeleteOrder(OrderRecord order)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection((string)(connStr)))
+                {
+                    connection.Open();
+                    string sql = "DELETE FROM orders WHERE article = @name";
+                    MySqlCommand command = new MySqlCommand(sql, connection);
+
+                    command.Parameters.AddWithValue("@name", order.NameProduct);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            catch (Exception ex)
+            { 
+                throw ex;
+            }
+        }
     }
 }
