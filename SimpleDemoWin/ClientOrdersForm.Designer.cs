@@ -110,6 +110,7 @@
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(36, 36);
             this.backButton.Text = "toolStripButton3";
+            this.backButton.ToolTipText = "Сброс сортировки";
             this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // ClientOrdersForm

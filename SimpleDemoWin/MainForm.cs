@@ -14,9 +14,11 @@ namespace SimpleDemoWin
     {
         private List<Client> allClients_ = new List<Client>();
         private MySQLClientsModel model_;
-        public MainForm()
+        private User currentUser_ = null;
+        public MainForm(User user)
         {
             InitializeComponent();
+            currentUser_ = user;
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
