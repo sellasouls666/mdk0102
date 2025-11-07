@@ -34,11 +34,18 @@ namespace SimpleDemoWin
             newRecord_.Price = (double)priceBox.Value;
             newRecord_.Count = (int)countBox.Value;
             newRecord_.SaleDate = DateTime.Now;
+            
+            DialogResult = DialogResult.OK;
         }
 
         public OrderRecord GetNewRecord()
         {
             return newRecord_;
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

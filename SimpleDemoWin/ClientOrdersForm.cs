@@ -16,6 +16,7 @@ namespace SimpleDemoWin
     {
         private Client client_;
         private MySQLClientsModel model_;
+        List<OrderRecord> orders_;
         public ClientOrdersForm(Client client, MySQLClientsModel model)
         {
             InitializeComponent();
@@ -25,8 +26,7 @@ namespace SimpleDemoWin
 
         private void ClientOrdersForm_Load(object sender, EventArgs e)
         {
-            OrdersTable.DataSource = null;
-            OrdersTable.DataSource = client_.order.GetRecords();
+            RefreshOrdersTable();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -35,8 +35,23 @@ namespace SimpleDemoWin
             DialogResult result = orderAddForm.ShowDialog();
             if (result == DialogResult.OK)
             {
+                model_.AddOrder(orderAddForm.GetNewRecord(), client_.ID);
+                client_.order.AddRecord(orderAddForm.GetNewRecord());
+                RefreshOrdersTable();
 
             }
+        }
+
+        private void RefreshOrdersTable()
+        {
+            OrdersTable.DataSource = null;
+            orders_ = client_.order.GetRecords();
+            OrdersTable.DataSource = orders_;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
