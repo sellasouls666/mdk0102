@@ -108,7 +108,7 @@ namespace SimpleDemoWin
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            AddClientForm addForm = new AddClientForm(model_);
+            AddClientForm addForm = new AddClientForm(model_, 0, null);
             DialogResult result = addForm.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -148,6 +148,36 @@ namespace SimpleDemoWin
                 allClients_.Clear();
                 allClients_ = model_.ReadAllClients();
                 ShowClients(allClients_);
+            }
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            var item = ClientsListBox.SelectedItem;
+            if (item == null)
+            {
+                return;
+            }
+
+            Client client = item as Client;
+            if (client == null)
+            {
+
+                return;
+            }
+            AddClientForm addForm = new AddClientForm(model_, 1, client);
+            DialogResult result = addForm.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                model_.EditClient(addForm.GetNewClient());
+                allClients_.Clear();
+                allClients_ = model_.ReadAllClients();
+                ShowClients(allClients_);
+            }
+
+            if (result == DialogResult.Cancel)
+            {
+                return;
             }
         }
     }

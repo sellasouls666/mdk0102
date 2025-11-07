@@ -19,11 +19,14 @@ namespace SimpleDemoWin
         private Client newClient_;
         private string selectedImagePath_;
         private MySQLClientsModel model_;
+        private int type_;
 
-        public AddClientForm(MySQLClientsModel model)
+        public AddClientForm(MySQLClientsModel model, int type, Client client)
         {
             InitializeComponent();
             model_ = model;
+            type_ = type;
+            newClient_ = client;
         }
 
         private void addBtn_Click(object sender, EventArgs e)
@@ -88,14 +91,27 @@ namespace SimpleDemoWin
                 return;
             }
 
-            Client addClient = new Client(model_.GenerateNextID());
-            addClient.Name = nameBox.Text;
-            addClient.Description = desBox.Text;
-            addClient.Phone = phoneBox.Text;
-            addClient.Mail = mailBox.Text;
-            addClient.ImagePath = selectedImagePath_;
-            newClient_ = (Client)addClient;
-            DialogResult = DialogResult.OK;
+            if (type_ == 0)
+            {
+                Client addClient = new Client(model_.GenerateNextID());
+                addClient.Name = nameBox.Text;
+                addClient.Description = desBox.Text;
+                addClient.Phone = phoneBox.Text;
+                addClient.Mail = mailBox.Text;
+                addClient.ImagePath = selectedImagePath_;
+                newClient_ = (Client)addClient;
+                DialogResult = DialogResult.OK;
+            }
+
+            if (type_ == 1)
+            {
+                newClient_.Name = nameBox.Text;
+                newClient_.Description = desBox.Text;
+                newClient_.Phone = phoneBox.Text;
+                newClient_.Mail = mailBox.Text;
+                newClient_.ImagePath = selectedImagePath_;
+                DialogResult = DialogResult.OK;
+            }
         }
 
         private void imageBtn_Click(object sender, EventArgs e)
@@ -141,6 +157,27 @@ namespace SimpleDemoWin
         private void cancelButton_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void AddClientForm_Load(object sender, EventArgs e)
+        {
+            if (type_ == 0)
+            {
+                nameBox.Text = string.Empty;
+                desBox.Text = string.Empty;
+                phoneBox.Text = string.Empty;
+                mailBox.Text = string.Empty;
+                selectedImagePath_ = null;
+            }
+
+            if (type_ == 1)
+            {
+                nameBox.Text = newClient_.Name;
+                desBox.Text = newClient_.Description;
+                phoneBox.Text = newClient_.Phone;
+                mailBox.Text = newClient_.Mail;
+                selectedImagePath_ = newClient_.ImagePath;
+            }
         }
     }
 }

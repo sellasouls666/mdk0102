@@ -165,6 +165,7 @@
             this.Controls.Add(this.mailBox);
             this.Name = "AddClientForm";
             this.Text = "Добавление";
+            this.Load += new System.EventHandler(this.AddClientForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

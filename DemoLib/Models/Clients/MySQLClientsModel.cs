@@ -148,5 +148,33 @@ namespace DemoLib.Models.Clients
                 throw ex;
             }
         }
+
+        public void EditClient(Client client)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection((string)(connStr)))
+                {
+                    connection.Open();
+                    string sql = "UPDATE clientsinfo SET clientName = @clientName, phone = @phone, mail = @mail, description = @description, " +
+                        "imagePath = @imagePath WHERE id = @id";
+                    MySqlCommand command = new MySqlCommand(sql, connection);
+
+                    command.Parameters.AddWithValue("@clientName", client.Name);
+                    command.Parameters.AddWithValue("@phone", client.Phone);
+                    command.Parameters.AddWithValue("@mail", client.Mail);
+                    command.Parameters.AddWithValue("@description", client.Description);
+                    command.Parameters.AddWithValue("@imagePath", client.ImagePath);
+                    command.Parameters.AddWithValue("@id", client.ID);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
