@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.RunButton = new System.Windows.Forms.Button();
+            this.previewButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PasswordTextBox
@@ -75,7 +76,7 @@
             // 
             this.RunButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.RunButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.RunButton.Location = new System.Drawing.Point(93, 103);
+            this.RunButton.Location = new System.Drawing.Point(29, 100);
             this.RunButton.Name = "RunButton";
             this.RunButton.Size = new System.Drawing.Size(93, 23);
             this.RunButton.TabIndex = 4;
@@ -83,11 +84,24 @@
             this.RunButton.UseVisualStyleBackColor = false;
             this.RunButton.Click += new System.EventHandler(this.RunButton_Click);
             // 
+            // previewButton
+            // 
+            this.previewButton.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.previewButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.previewButton.Location = new System.Drawing.Point(162, 100);
+            this.previewButton.Name = "previewButton";
+            this.previewButton.Size = new System.Drawing.Size(93, 23);
+            this.previewButton.TabIndex = 5;
+            this.previewButton.Text = "Предпросмотр";
+            this.previewButton.UseVisualStyleBackColor = false;
+            this.previewButton.Click += new System.EventHandler(this.previewButton_Click_1);
+            // 
             // AuthorizeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 135);
+            this.Controls.Add(this.previewButton);
             this.Controls.Add(this.RunButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -111,5 +125,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button RunButton;
+        private System.Windows.Forms.Button previewButton;
     }
 }

@@ -15,10 +15,67 @@ namespace SimpleDemoWin
         private List<Client> allClients_ = new List<Client>();
         private MySQLClientsModel model_;
         private User currentUser_ = null;
+
         public MainForm(User user)
         {
             InitializeComponent();
             currentUser_ = user;
+            SetupAccessControls();
+        }
+
+        private void SetupAccessControls()
+        {
+            if (currentUser_ == null)
+            {
+                SetReadOnlyMode();
+                return;
+            }
+
+            switch (Convert.ToString(currentUser_.Role).ToLower())
+            {
+                case "admin":
+                    Card.Cursor = Cursors.Hand;
+                    break;
+
+                case "manager":
+                    Card.DoubleClick -= Card_DoubleClick;
+                    Card.Cursor = Cursors.Default;
+                    break;
+
+                case "client":
+                    SetClientMode();
+                    break;
+
+                default:
+                    SetReadOnlyMode();
+                    break;
+            }
+        }
+
+        private void SetReadOnlyMode()
+        {
+            AddButton.Enabled = false;
+            RemoveButton.Enabled = false;
+            EditButton.Enabled = false;
+
+            Card.DoubleClick -= Card_DoubleClick;
+            Card.Cursor = Cursors.Default;
+
+            SearchByNameTextBox.Enabled = true;
+            AlphabetComboBox.Enabled = true;
+        }
+
+        private void SetClientMode()
+        {
+            AddButton.Enabled = false;
+            RemoveButton.Enabled = false;
+            EditButton.Enabled = false;
+
+            Card.DoubleClick -= Card_DoubleClick;
+            Card.Cursor = Cursors.Default;
+
+            SearchByNameTextBox.Enabled = true;
+            AlphabetComboBox.Enabled = true;
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -47,7 +104,6 @@ namespace SimpleDemoWin
             Client client = item as Client;
             if (client == null)
             {
-
                 return;
             }
 
@@ -70,16 +126,15 @@ namespace SimpleDemoWin
                 return;
             }
 
-            string searchingText = SearchByNameTextBox.Text; // это условие поиска
-            string alphabetText = AlphabetComboBox.Text; // это условие фильтра
-
+            string searchingText = SearchByNameTextBox.Text;
+            string alphabetText = AlphabetComboBox.Text;
 
             List<Client> resultClients = new List<Client>();
             foreach (Client client in allClients_)
             {
                 if ((String.IsNullOrEmpty(searchingText)
                      || client.Name.ToLower().Contains(searchingText.ToLower()))
-                    && (String.IsNullOrEmpty(alphabetText) 
+                    && (String.IsNullOrEmpty(alphabetText)
                      || client.Name[0] == alphabetText[0]))
                 {
                     resultClients.Add(client);
@@ -112,6 +167,15 @@ namespace SimpleDemoWin
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+            if (currentUser_ == null ||
+                (Convert.ToString(currentUser_.Role).ToLower() != "admin" &&
+                 Convert.ToString(currentUser_.Role).ToLower() != "manager"))
+            {
+                MessageBox.Show("Недостаточно прав для добавления клиентов", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             AddClientForm addForm = new AddClientForm(model_, 0, null);
             DialogResult result = addForm.ShowDialog();
             if (result == DialogResult.OK)
@@ -121,15 +185,19 @@ namespace SimpleDemoWin
                 allClients_ = model_.ReadAllClients();
                 ShowClients(allClients_);
             }
-
-            if (result == DialogResult.Cancel)
-            {
-                return;
-            }
         }
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
+            if (currentUser_ == null ||
+                (Convert.ToString(currentUser_.Role).ToLower() != "admin" &&
+                 Convert.ToString(currentUser_.Role).ToLower() != "manager"))
+            {
+                MessageBox.Show("Недостаточно прав для удаления клиентов", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var item = ClientsListBox.SelectedItem;
             if (item == null)
             {
@@ -139,7 +207,6 @@ namespace SimpleDemoWin
             Client client = item as Client;
             if (client == null)
             {
-
                 return;
             }
 
@@ -157,6 +224,15 @@ namespace SimpleDemoWin
 
         private void EditButton_Click(object sender, EventArgs e)
         {
+            if (currentUser_ == null ||
+                (Convert.ToString(currentUser_.Role).ToLower() != "admin" &&
+                 Convert.ToString(currentUser_.Role).ToLower() != "manager"))
+            {
+                MessageBox.Show("Недостаточно прав для редактирования клиентов", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var item = ClientsListBox.SelectedItem;
             if (item == null)
             {
@@ -166,9 +242,9 @@ namespace SimpleDemoWin
             Client client = item as Client;
             if (client == null)
             {
-
                 return;
             }
+
             AddClientForm addForm = new AddClientForm(model_, 1, client);
             DialogResult result = addForm.ShowDialog();
             if (result == DialogResult.OK)
@@ -178,15 +254,17 @@ namespace SimpleDemoWin
                 allClients_ = model_.ReadAllClients();
                 ShowClients(allClients_);
             }
-
-            if (result == DialogResult.Cancel)
-            {
-                return;
-            }
         }
 
         private void Card_DoubleClick(object sender, EventArgs e)
         {
+            if (currentUser_ == null || Convert.ToString(currentUser_.Role).ToLower() != "admin")
+            {
+                MessageBox.Show("Недостаточно прав для просмотра заказов", "Ошибка",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var item = ClientsListBox.SelectedItem;
             if (item == null)
             {
@@ -196,9 +274,9 @@ namespace SimpleDemoWin
             Client client = item as Client;
             if (client == null)
             {
-
                 return;
             }
+
             ClientOrdersForm ordersForm = new ClientOrdersForm(client, model_);
             ordersForm.Text = "Заказы клиента " + client.Name;
             ordersForm.ShowDialog();

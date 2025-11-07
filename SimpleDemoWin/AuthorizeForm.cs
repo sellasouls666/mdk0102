@@ -43,9 +43,11 @@ namespace DemoProject
             }
         }
 
-        private void PreviewButton_Click(object sender, EventArgs e)
+        private void previewButton_Click_1(object sender, EventArgs e)
         {
-
+            MainForm mainForm = new MainForm(null);
+            mainForm.Show();
+            Hide();
         }
     }
 }
