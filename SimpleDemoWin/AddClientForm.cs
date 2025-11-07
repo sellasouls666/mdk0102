@@ -139,6 +139,8 @@ namespace SimpleDemoWin
 
                         MessageBox.Show($"Изображение успешно загружено!", "Успех",
                                       MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        avatarBox.ImageLocation = selectedImagePath_;
                     }
                     catch (Exception ex)
                     {
@@ -177,6 +179,8 @@ namespace SimpleDemoWin
                 phoneBox.Text = newClient_.Phone;
                 mailBox.Text = newClient_.Mail;
                 selectedImagePath_ = newClient_.ImagePath;
+                avatarBox.ImageLocation = selectedImagePath_;
+                this.Text = "Редактирование клиента " + newClient_.Name;
             }
         }
     }
